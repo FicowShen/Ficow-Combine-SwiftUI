@@ -25,6 +25,8 @@ class ViewController: UIViewController {
     let subjectsDemo = SubjectsDemo()
     let notificationPublisherDemo = NotificationPublisherDemo()
     let timerPublisherDemo = TimerPublisherDemo()
+    let kvoPublisherDemo = KVOPublisherDemo()
+    let asyncCodeDemo = AsyncCodeDemo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +37,8 @@ class ViewController: UIViewController {
         subjectsDemo.run()
         notificationPublisherDemo.run()
         timerPublisherDemo.run()
+        kvoPublisherDemo.run()
+        asyncCodeDemo.run()
     }
     
     @IBAction func presentProfilePage(_ sender: Any) {

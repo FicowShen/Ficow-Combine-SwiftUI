@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+// https://developer.apple.com/documentation/combine/replacing-foundation-timers-with-timer-publishers
 final class TimerPublisherDemo {
     
     private var timer: Timer?

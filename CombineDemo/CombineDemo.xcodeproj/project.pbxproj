@@ -22,6 +22,8 @@
 		6A24302A24A35A800080A973 /* Subjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302924A35A800080A973 /* Subjects.swift */; };
 		6A24302C24A35D4F0080A973 /* NotificationPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302B24A35D4F0080A973 /* NotificationPublisher.swift */; };
 		6A24302E24A35F890080A973 /* TimerPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302D24A35F890080A973 /* TimerPublisher.swift */; };
+		6A24303024A362610080A973 /* KVOPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302F24A362610080A973 /* KVOPublisher.swift */; };
+		6A24303224A364030080A973 /* AsyncCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24303124A364030080A973 /* AsyncCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +65,8 @@
 		6A24302924A35A800080A973 /* Subjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subjects.swift; sourceTree = "<group>"; };
 		6A24302B24A35D4F0080A973 /* NotificationPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPublisher.swift; sourceTree = "<group>"; };
 		6A24302D24A35F890080A973 /* TimerPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerPublisher.swift; sourceTree = "<group>"; };
+		6A24302F24A362610080A973 /* KVOPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KVOPublisher.swift; sourceTree = "<group>"; };
+		6A24303124A364030080A973 /* AsyncCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +131,8 @@
 				6A24302924A35A800080A973 /* Subjects.swift */,
 				6A24302B24A35D4F0080A973 /* NotificationPublisher.swift */,
 				6A24302D24A35F890080A973 /* TimerPublisher.swift */,
+				6A24302F24A362610080A973 /* KVOPublisher.swift */,
+				6A24303124A364030080A973 /* AsyncCode.swift */,
 			);
 			path = CombineDemo;
 			sourceTree = "<group>";
@@ -281,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A24301F24A311F20080A973 /* SimpleDemo.swift in Sources */,
+				6A24303024A362610080A973 /* KVOPublisher.swift in Sources */,
 				6A24302C24A35D4F0080A973 /* NotificationPublisher.swift in Sources */,
 				6A242FF324A3080D0080A973 /* ViewController.swift in Sources */,
 				6A242FEF24A3080D0080A973 /* AppDelegate.swift in Sources */,
@@ -290,6 +297,7 @@
 				6A24302824A34F040080A973 /* CustomSubscriberWithBackPressure.swift in Sources */,
 				6A24302E24A35F890080A973 /* TimerPublisher.swift in Sources */,
 				6A24302624A347010080A973 /* ConnectablePublisherDemo.swift in Sources */,
+				6A24303224A364030080A973 /* AsyncCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
