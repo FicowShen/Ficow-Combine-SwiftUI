@@ -67,13 +67,13 @@ final class ProfileViewController: UIViewController {
         switch state {
         case .isLoading:
             // Show loading spinner
-            print(state)
+            log(state)
         case .failed(let error):
             // Show error view
-            print(error)
+            log(error)
         case .loaded(let user):
             // Show user's profile
-            print(user)
+            log(user)
         }
     }
 }

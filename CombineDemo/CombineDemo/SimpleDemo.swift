@@ -53,27 +53,27 @@ final class SimpleDemo {
         let cancellable = publisher.sink(
             receiveCompletion: { completion in
                 // Called once, when the publisher was completed.
-                print(completion)
+                log(completion)
                 switch completion {
                 case .failure(let error):
-                    print(error)
+                    log(error)
                 case .finished:
-                    print("Success")
+                    log("Success")
                 }
         },
             receiveValue: { value in
                 // Can be called multiple times, each time that a
                 // new value was emitted by the publisher.
-                print(value)
+                log(value)
                 let decoder = JSONDecoder()
                 do {
                     // Since each value passed into our closure will be a tuple
                     // containing the downloaded data, as well as the network
                     // response itself, we're accessing the 'data' property here:
                     let repo = try decoder.decode(Repository.self, from: value.data)
-                    print(repo)
+                    log(repo)
                 } catch {
-                    print(error)
+                    log(error)
                 }
         })
         // cancellable.cancel()
@@ -91,17 +91,17 @@ final class SimpleDemo {
             .sink(
                 receiveCompletion: { completion in
                     // Called once, when the publisher was completed.
-                    print(completion)
+                    log(completion)
                     switch completion {
                     case .failure(let error):
-                        print(error)
+                        log(error)
                     case .finished:
-                        print("Success")
+                        log("Success")
                     }
             },receiveValue: { value in
                 // Can be called multiple times, each time that a
                 // new value was emitted by the publisher.
-                print(value) // mapped Repository object
+                log(value) // mapped Repository object
             })
         self.cancellable2 = cancellable2
     }
@@ -111,7 +111,7 @@ final class SimpleDemo {
         let cancellable3 = counter.publisher
             .filter { $0 > 2 }
             .sink { value in
-                print(value)
+                log(value)
         }
         
         // Since we're filtering out all values below 3, only our final
