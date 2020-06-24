@@ -19,6 +19,7 @@
 		6A24302424A33BFE0080A973 /* @Published.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302324A33BFE0080A973 /* @Published.swift */; };
 		6A24302624A347010080A973 /* ConnectablePublisherDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302524A347010080A973 /* ConnectablePublisherDemo.swift */; };
 		6A24302824A34F040080A973 /* CustomSubscriberWithBackPressure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302724A34F040080A973 /* CustomSubscriberWithBackPressure.swift */; };
+		6A24302A24A35A800080A973 /* Subjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A24302924A35A800080A973 /* Subjects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		6A24302324A33BFE0080A973 /* @Published.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "@Published.swift"; sourceTree = "<group>"; };
 		6A24302524A347010080A973 /* ConnectablePublisherDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectablePublisherDemo.swift; sourceTree = "<group>"; };
 		6A24302724A34F040080A973 /* CustomSubscriberWithBackPressure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSubscriberWithBackPressure.swift; sourceTree = "<group>"; };
+		6A24302924A35A800080A973 /* Subjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Subjects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 				6A24302324A33BFE0080A973 /* @Published.swift */,
 				6A24302524A347010080A973 /* ConnectablePublisherDemo.swift */,
 				6A24302724A34F040080A973 /* CustomSubscriberWithBackPressure.swift */,
+				6A24302924A35A800080A973 /* Subjects.swift */,
 			);
 			path = CombineDemo;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				6A242FF324A3080D0080A973 /* ViewController.swift in Sources */,
 				6A242FEF24A3080D0080A973 /* AppDelegate.swift in Sources */,
 				6A24302424A33BFE0080A973 /* @Published.swift in Sources */,
+				6A24302A24A35A800080A973 /* Subjects.swift in Sources */,
 				6A242FF124A3080D0080A973 /* SceneDelegate.swift in Sources */,
 				6A24302824A34F040080A973 /* CustomSubscriberWithBackPressure.swift in Sources */,
 				6A24302624A347010080A973 /* ConnectablePublisherDemo.swift in Sources */,

@@ -22,6 +22,7 @@ class ViewController: UIViewController {
     let simpleDemo = SimpleDemo()
     let connectableDemo = ConnectablePublisherDemo()
     let customSubscriberWithBackPressureDemo = CustomSubscriberWithBackPressureDemo()
+    let subjectsDemo = SubjectsDemo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class ViewController: UIViewController {
         simpleDemo.run()
         connectableDemo.run()
         customSubscriberWithBackPressureDemo.run()
+        subjectsDemo.run()
     }
     
     @IBAction func presentProfilePage(_ sender: Any) {
