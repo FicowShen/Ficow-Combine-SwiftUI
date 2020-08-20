@@ -14,13 +14,13 @@ final class SubjectsDemo {
     private var cancellable1: AnyCancellable?
     private var cancellable2: AnyCancellable?
     
-    private let currentValueSubject = CurrentValueSubject<Int, Never>(1)
+    private let currentValueSubject = CurrentValueSubject<Void, Never>(())
     private let passThroughtSubject = PassthroughSubject<Int, Never>()
     func run() {
         currentValueSubjectDemo()
         passThroughtSubjectDemo()
         
-        currentValueSubject.send(3)
+        currentValueSubject.send(())
         passThroughtSubject.send(5)
     }
     

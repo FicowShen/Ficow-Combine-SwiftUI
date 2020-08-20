@@ -6,12 +6,62 @@
 //  Copyright © 2020 FicowShen. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import Combine
 
 // https://www.swiftbysundell.com/basics/combine/?utm_campaign=iOS%2BDev%2BWeekly&utm_medium=email&utm_source=iOS%2BDev%2BWeekly%2BIssue%2B452
 final class SimpleDemo {
-    
+
+    class SimplestDemo {
+
+        var cancellable: AnyCancellable?
+
+        func makeRequest() {
+            let url = URL(string: "https://ficow.cn")!
+            let dataTaskPublisher = URLSession.shared.dataTaskPublisher(for: url)
+
+            cancellable = dataTaskPublisher
+                .delay(for: .seconds(2), scheduler: DispatchQueue.global())
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { completion in
+                    // 发布结束的时候会被调用一次
+                    switch completion {
+                    case .failure(let error):
+                        print(error)
+                    case .finished:
+                        print("success")
+                    }
+                }, receiveValue: { value in
+                    // 每次接收到发布者发送的值都会被调用一次
+                    // 因为发起的是网络请求，所以这里只会被调用一次
+                    print(value.data)
+                    print(value.response)
+                })
+        }
+
+    }
+
+    class OfficialDemo {
+
+        class MyViewModel {
+            var filterString = ""
+        }
+
+        private let filterField = UITextField()
+        private let myViewModel = MyViewModel()
+        private var subscription: AnyCancellable?
+
+        func bind() {
+            subscription = NotificationCenter.default
+                .publisher(for: UITextField.textDidChangeNotification, object: filterField)
+                .map( { (($0.object as! UITextField).text ?? "") } )
+                .filter( { $0.unicodeScalars.allSatisfy({CharacterSet.alphanumerics.contains($0)}) } )
+                .debounce(for: .milliseconds(500), scheduler: RunLoop.main)
+                .receive(on: RunLoop.main)
+                .assign(to:\MyViewModel.filterString, on: myViewModel)
+        }
+    }
+
     struct Repository: Codable {
         var name: String
         var url: URL
@@ -40,10 +90,11 @@ final class SimpleDemo {
     
     var cancellable: AnyCancellable?
     var cancellable2: AnyCancellable?
-    
+    let demo = SimplestDemo()
     func run() {
-        dataTaskDemo()
-        counterDemo()
+        demo.makeRequest()
+//        dataTaskDemo()
+//        counterDemo()
     }
     
     func dataTaskDemo() {

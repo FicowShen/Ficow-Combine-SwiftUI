@@ -32,13 +32,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         simpleDemo.run()
-        connectableDemo.run()
-        customSubscriberWithBackPressureDemo.run()
-        subjectsDemo.run()
-        notificationPublisherDemo.run()
-        timerPublisherDemo.run()
-        kvoPublisherDemo.run()
-        asyncCodeDemo.run()
+//        connectableDemo.run()
+//        customSubscriberWithBackPressureDemo.run()
+//        subjectsDemo.run()
+//        notificationPublisherDemo.run()
+//        timerPublisherDemo.run()
+//        kvoPublisherDemo.run()
+//        asyncCodeDemo.run()
     }
     
     @IBAction func presentProfilePage(_ sender: Any) {

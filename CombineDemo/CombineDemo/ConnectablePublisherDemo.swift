@@ -24,28 +24,17 @@ final class ConnectablePublisherDemo {
     }
     
     private func runMakeConnectableDemo() {
-        let url = URL(string: "https://api.github.com/repos/johnsundell/publish")!
-        let publisher = URLSession.shared.dataTaskPublisher(for: url)
-        
-        let connectable = publisher.map(\.data)
+        let url = URL(string: "https://ficow.cn")!
+        let connectable = URLSession.shared
+            .dataTaskPublisher(for: url)
+            .map(\.data)
             .catch() { _ in Just(Data()) }
             .share()
             .makeConnectable()
         
-        cancellable1 = connectable.sink(
-            receiveCompletion: { completion in
-                log(completion)
-                switch completion {
-                case .failure(let error):
-                    log(error)
-                case .finished:
-                    log("Success")
-                }
-        },receiveValue: { value in
-            // Can be called multiple times, each time that a
-            // new value was emitted by the publisher.
-            log(value)
-        })
+        cancellable1 = connectable
+            .sink(receiveCompletion: { print("Received completion 1: \($0).") },
+                  receiveValue: { print("Received data 1: \($0.count) bytes.") })
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.cancellable2 = connectable.sink(receiveCompletion: { log("Received completion 2: \($0).") },
