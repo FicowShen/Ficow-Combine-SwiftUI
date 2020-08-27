@@ -1,7 +1,12 @@
 import Foundation
 import Combine
 
-final class UserStateManager {
+protocol UserStateManaging {
+    func userDidLogin(userInfo: UserInfo)
+    func userDidLogout()
+}
+
+final class UserStateManager: UserStateManaging {
 
     static let shared = UserStateManager()
 

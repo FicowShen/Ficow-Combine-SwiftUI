@@ -1,5 +1,6 @@
 import UIKit
 import Combine
+import CombineExt
 
 final class LoginViewController: UIViewController {
 
@@ -7,7 +8,10 @@ final class LoginViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
 
+    private let viewModel = LoginViewModel(userStateManager: UserStateManager.shared,
+                                           loginService: LoginService())
     private let loginService = LoginService()
+    private let errorSubject = PassthroughSubject<Error, Never>()
     private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
@@ -18,50 +22,36 @@ final class LoginViewController: UIViewController {
     }
 
     private func bind() {
-
-        let accountPublisher = accountTextField.textPublisher
-        let passwordPublisher = passwordTextField.textPublisher
-
-        accountPublisher
-            .combineLatest(passwordPublisher)
-            .map { !$0.0.isEmpty && !$0.1.isEmpty }
+        let accountPublisher = accountTextField.textPublisher.eraseToAnyPublisher()
+        let passwordPublisher = passwordTextField.textPublisher.eraseToAnyPublisher()
+        let loginPublisher = loginButton.publisher(for: .touchUpInside).eraseToAnyPublisher()
+        
+        let input = LoginViewModel.Input(accountPublisher: accountPublisher,
+                                         passwordPublisher: passwordPublisher,
+                                         loginPublisher: loginPublisher)
+        let output = viewModel.transform(input: input)
+        
+        output
+            .canLogin
             .assign(to: \.isEnabled, on: loginButton)
             .store(in: &cancellables)
-
-        let loginPublisher = loginButton.publisher(for: .touchUpInside)
-
-        loginPublisher
-            .sink {
-                print($0)
+        
+        output.result
+            .receive(on: RunLoop.main)
+            .sink { [unowned self] userInfo in
+                self.navigateToHomepage()
             }
             .store(in: &cancellables)
-
-        Publishers
-            .CombineLatest3(accountPublisher, passwordPublisher, loginPublisher)
-            .setFailureType(to: Error.self)
-            .flatMap { [unowned self] (account, password, _) -> AnyPublisher<UserInfo, Error> in
-                self.loginService.login(account: account, password: password)
+        
+        output.error
+            .receive(on: RunLoop.main)
+            .sink { [unowned self] error in
+                self.showErrorAlert(error: error)
             }
-            .sink(receiveCompletion: { [weak self] completion in
-                switch completion {
-                case .finished:
-                    return
-                case .failure(let error):
-                    self?.showError(error)
-                }
-            }, receiveValue: { [weak self] userInfo in
-                UserStateManager.shared.userDidLogin(userInfo: userInfo)
-                self?.navigateToHomepage()
-            })
             .store(in: &cancellables)
     }
 
     private func navigateToHomepage() {
         dismiss(animated: true, completion: nil)
     }
-
-    private func showError(_ error: Error) {}
-
-
 }
-
