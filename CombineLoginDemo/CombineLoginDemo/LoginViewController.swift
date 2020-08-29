@@ -22,9 +22,16 @@ final class LoginViewController: UIViewController {
     }
 
     private func bind() {
-        let accountPublisher = accountTextField.textPublisher.eraseToAnyPublisher()
-        let passwordPublisher = passwordTextField.textPublisher.eraseToAnyPublisher()
-        let loginPublisher = loginButton.publisher(for: .touchUpInside).eraseToAnyPublisher()
+        let accountPublisher = accountTextField
+            .textPublisher
+            .eraseToAnyPublisher()
+        let passwordPublisher = passwordTextField
+            .textPublisher
+            .eraseToAnyPublisher()
+        let loginPublisher = loginButton
+            .publisher(for: .touchUpInside)
+            .map { _ in () }
+            .eraseToAnyPublisher()
         
         let input = LoginViewModel.Input(accountPublisher: accountPublisher,
                                          passwordPublisher: passwordPublisher,

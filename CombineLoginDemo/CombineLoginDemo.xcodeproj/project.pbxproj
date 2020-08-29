@@ -17,7 +17,7 @@
 		6A92650424F4013800DE9EAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A92650224F4013800DE9EAC /* Main.storyboard */; };
 		6A92650624F4013A00DE9EAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A92650524F4013A00DE9EAC /* Assets.xcassets */; };
 		6A92650924F4013A00DE9EAC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A92650724F4013A00DE9EAC /* LaunchScreen.storyboard */; };
-		6A92651424F4013A00DE9EAC /* CombineLoginDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92651324F4013A00DE9EAC /* CombineLoginDemoTests.swift */; };
+		6A92651424F4013A00DE9EAC /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92651324F4013A00DE9EAC /* BaseTest.swift */; };
 		6A92651F24F4013A00DE9EAC /* CombineLoginDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92651E24F4013A00DE9EAC /* CombineLoginDemoUITests.swift */; };
 		6A92652D24F4016600DE9EAC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92652C24F4016600DE9EAC /* LoginViewController.swift */; };
 		6A92652F24F4018500DE9EAC /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92652E24F4018500DE9EAC /* LoginService.swift */; };
@@ -26,6 +26,7 @@
 		6A92653524F49A0600DE9EAC /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92653424F49A0600DE9EAC /* UITextField+Extension.swift */; };
 		6A92653724F49A2200DE9EAC /* UIControlPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92653624F49A2200DE9EAC /* UIControlPublisher.swift */; };
 		6A92653924F49B4000DE9EAC /* UIControl+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92653824F49B4000DE9EAC /* UIControl+Extension.swift */; };
+		6A92658024F9D36700DE9EAC /* LoginViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A92657F24F9D36700DE9EAC /* LoginViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +59,7 @@
 		6A92650824F4013A00DE9EAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A92650A24F4013A00DE9EAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A92650F24F4013A00DE9EAC /* CombineLoginDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineLoginDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A92651324F4013A00DE9EAC /* CombineLoginDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLoginDemoTests.swift; sourceTree = "<group>"; };
+		6A92651324F4013A00DE9EAC /* BaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
 		6A92651524F4013A00DE9EAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A92651A24F4013A00DE9EAC /* CombineLoginDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineLoginDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A92651E24F4013A00DE9EAC /* CombineLoginDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineLoginDemoUITests.swift; sourceTree = "<group>"; };
@@ -70,6 +71,7 @@
 		6A92653424F49A0600DE9EAC /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		6A92653624F49A2200DE9EAC /* UIControlPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlPublisher.swift; sourceTree = "<group>"; };
 		6A92653824F49B4000DE9EAC /* UIControl+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Extension.swift"; sourceTree = "<group>"; };
+		6A92657F24F9D36700DE9EAC /* LoginViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +144,9 @@
 		6A92651224F4013A00DE9EAC /* CombineLoginDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				6A92651324F4013A00DE9EAC /* CombineLoginDemoTests.swift */,
+				6A92651324F4013A00DE9EAC /* BaseTest.swift */,
 				6A92651524F4013A00DE9EAC /* Info.plist */,
+				6A92657F24F9D36700DE9EAC /* LoginViewModelTests.swift */,
 			);
 			path = CombineLoginDemoTests;
 			sourceTree = "<group>";
@@ -325,7 +328,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A92651424F4013A00DE9EAC /* CombineLoginDemoTests.swift in Sources */,
+				6A92658024F9D36700DE9EAC /* LoginViewModelTests.swift in Sources */,
+				6A92651424F4013A00DE9EAC /* BaseTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -54,13 +54,13 @@ final class LoginViewModel: ViewModel {
 
 extension LoginViewModel {
     struct Input {
-        let accountPublisher: AnyPublisher<String, NotificationCenter.Publisher.Failure>
-        let passwordPublisher: AnyPublisher<String, NotificationCenter.Publisher.Failure>
-        let loginPublisher: AnyPublisher<UIControlPublisher<UIControl>.Output, UIControlPublisher<UIControl>.Failure>
+        let accountPublisher: AnyPublisher<String, Never>
+        let passwordPublisher: AnyPublisher<String, Never>
+        let loginPublisher: AnyPublisher<Void, Never>
     }
     struct Output {
-        let canLogin: AnyPublisher<Bool, NotificationCenter.Publisher.Failure>
-        let result: AnyPublisher<UserInfo, UIControlPublisher<UIControl>.Failure>
+        let canLogin: AnyPublisher<Bool, Never>
+        let result: AnyPublisher<UserInfo, Never>
         let error: AnyPublisher<Error, Never>
     }
 }
