@@ -36,8 +36,6 @@ final class LoginViewModelTests: BaseTest {
     }
 
     func testCanLogin() {
-        loginService.shouldSucceed = false
-
         var times = 0
         output.canLogin
             .sink { canLogin in
@@ -103,6 +101,8 @@ final class LoginViewModelTests: BaseTest {
 }
 
 private class MockUserStateManager: UserStateManaging {
+    var hasLoggedIn: Bool { false }
+    var loginStatusPublisher: AnyPublisher<Bool, Never> { Just(false).eraseToAnyPublisher() }
 
     var ranUserDidLogin = false
 

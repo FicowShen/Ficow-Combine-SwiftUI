@@ -2,6 +2,9 @@ import Foundation
 import Combine
 
 protocol UserStateManaging {
+    var hasLoggedIn: Bool { get }
+    var loginStatusPublisher: AnyPublisher<Bool, Never> { get }
+    
     func userDidLogin(userInfo: UserInfo)
     func userDidLogout()
 }
@@ -17,7 +20,7 @@ final class UserStateManager: UserStateManaging {
     private(set) var userInfo: UserInfo?
 
     private let userDidLoginSubject = CurrentValueSubject<Bool, Never>(false)
-    var userDidLoginPublisher: AnyPublisher<Bool, Never> {
+    var loginStatusPublisher: AnyPublisher<Bool, Never> {
         return userDidLoginSubject.eraseToAnyPublisher()
     }
 

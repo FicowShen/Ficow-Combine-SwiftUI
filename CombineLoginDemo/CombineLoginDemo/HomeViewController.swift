@@ -1,7 +1,9 @@
 import UIKit
 import Combine
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
+
+    var userStateManager: UserStateManaging = UserStateManager.shared
 
     private var cancellable: AnyCancellable?
 
@@ -12,14 +14,14 @@ class HomeViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if !UserStateManager.shared.hasLoggedIn {
+        if !userStateManager.hasLoggedIn {
             showLoginPage(animated: false)
         }
     }
 
     private func bind() {
-        cancellable = UserStateManager.shared
-            .userDidLoginPublisher
+        cancellable = userStateManager
+            .loginStatusPublisher
             .sink { [weak self] hasLoggedIn in
                 if !hasLoggedIn {
                     self?.showLoginPage(animated: true)
