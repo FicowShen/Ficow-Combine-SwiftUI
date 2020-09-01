@@ -37,12 +37,14 @@ final class LoginViewModelTests: BaseTest {
 
     func testCanLogin() {
         var times = 0
+        let expect = expectation(description: #function)
         output.canLogin
             .sink { canLogin in
                 if times == 0 {
                     XCTAssertFalse(canLogin)
                 } else {
                     XCTAssertTrue(canLogin)
+                    expect.fulfill()
                 }
                 times += 1
             }
@@ -52,16 +54,19 @@ final class LoginViewModelTests: BaseTest {
 
         passwordPublisher.send("")
         passwordPublisher.send("2")
+        wait(for: [expect], timeout: 5)
     }
 
     func testLoginFailure() {
 
         loginService.shouldSucceed = false
+        let expect = expectation(description: #function)
 
         output.error
             .sink { [unowned self] error in
                 XCTAssertEqual(error.localizedDescription, "mock login should fail")
                 XCTAssertFalse(self.userStateManager.ranUserDidLogin)
+                expect.fulfill()
             }
             .store(in: &cancellables)
 
@@ -74,11 +79,13 @@ final class LoginViewModelTests: BaseTest {
         accountPublisher.send("2")
         passwordPublisher.send("2")
         loginPublisher.send(())
+        wait(for: [expect], timeout: 5)
     }
 
     func testLoginSuccess() {
 
         loginService.shouldSucceed = true
+        let expect = expectation(description: #function)
 
         output.error
             .sink { error in
@@ -90,12 +97,14 @@ final class LoginViewModelTests: BaseTest {
             .sink { [unowned self] userInfo in
                 XCTAssertEqual(1, userInfo.id)
                 XCTAssertTrue(self.userStateManager.ranUserDidLogin)
+                expect.fulfill()
             }
             .store(in: &cancellables)
 
         accountPublisher.send("3")
         passwordPublisher.send("3")
         loginPublisher.send(())
+        wait(for: [expect], timeout: 5)
     }
 
 }
