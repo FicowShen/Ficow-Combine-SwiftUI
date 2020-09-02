@@ -49,4 +49,30 @@ final class TestCustomOperatorTests: XCTestCase {
         wait(for: [expect], timeout: 5)
     }
     
+    func testMyWithLatestFrom() throws {
+        let expect = expectation(description: #function)
+        
+        let subject1 = PassthroughSubject<Int, Never>()
+        let subject2 = PassthroughSubject<String, Never>()
+        
+        subject1
+            .myWithLatestFrom(subject2, transform: { (intValue, stringValue) -> String in
+                if stringValue == "2" {
+                    return "22"
+                }
+                return "33"
+            })
+            .sink { v in
+                XCTAssertEqual(v, "33")
+                expect.fulfill()
+            }
+            .store(in: &cancellables)
+        
+        subject2.send("2")
+        subject2.send("3")
+        subject1.send(1)
+        
+        wait(for: [expect], timeout: 5)
+    }
+    
 }
