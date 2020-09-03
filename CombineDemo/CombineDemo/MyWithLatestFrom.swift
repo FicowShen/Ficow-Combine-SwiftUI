@@ -46,8 +46,8 @@ extension Publishers.MyWithLatestFrom {
         
         private var otherSubscription: Combine.Subscription?
         private var latestValueFromOther: Other.Output?
-        
-        private var upstreamCancellable: AnyCancellable?
+
+        private var backPressureSubscriber: BackPressureSubscriber<Upstream, Downstream>?
 
         init(upstream: Upstream,
              downstream: Downstream,
@@ -62,12 +62,12 @@ extension Publishers.MyWithLatestFrom {
         }
 
         func request(_ demand: Subscribers.Demand) {
-            // TODO: support back pressure
+            backPressureSubscriber?.requestDemand(demand)
         }
 
         func cancel() {
             otherSubscription?.cancel()
-            upstreamCancellable = nil
+            backPressureSubscriber = nil
         }
 
         private func trackLatestFromSecondStream() {
@@ -88,21 +88,15 @@ extension Publishers.MyWithLatestFrom {
         }
         
         private func trackMainUpstream() {
-            upstreamCancellable = upstream.sink(receiveCompletion: { [weak self] (completion) in
-                switch completion {
-                case .failure(let error):
-                    self?.downstream.receive(completion: Subscribers.Completion.failure(error))
-                    self?.cancel()
-                case .finished:
-                    self?.downstream.receive(completion: Subscribers.Completion.finished)
-                    self?.cancel()
-                }
-            }, receiveValue: { [weak self] (value) in
-                guard let self = self,
-                    let latestValueFromOther = self.latestValueFromOther
-                    else { return }
-                _ = self.downstream.receive(self.transform(value, latestValueFromOther))
-            })
+            backPressureSubscriber = BackPressureSubscriber(upstream: upstream,
+                                                            downstream: downstream,
+                                                            transformOutput: { [weak self] value in
+                                                                guard let self = self,
+                                                                    let other = self.latestValueFromOther
+                                                                    else { return nil }
+                                                                return self.transform(value, other) },
+                                                            transformFailure: { $0 })
+
         }
     }
 }
