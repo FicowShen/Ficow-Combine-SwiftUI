@@ -1,5 +1,6 @@
 import XCTest
 import Combine
+import CombineExt
 @testable import CombineLoginDemo
 
 final class LoginViewModelTests: BaseTest {

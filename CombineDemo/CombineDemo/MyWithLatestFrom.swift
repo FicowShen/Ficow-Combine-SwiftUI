@@ -44,6 +44,8 @@ extension Publishers.MyWithLatestFrom {
         private let downstream: Downstream
         private let transform: Transform
         
+        private var initialDemandOfDownstream = Subscribers.Demand.none
+        
         private var otherSubscription: Combine.Subscription?
         private var latestValueFromOther: Other.Output?
 
@@ -62,6 +64,10 @@ extension Publishers.MyWithLatestFrom {
         }
 
         func request(_ demand: Subscribers.Demand) {
+            guard latestValueFromOther != nil else {
+                initialDemandOfDownstream += demand
+                return
+            }
             backPressureSubscriber?.requestDemand(demand)
         }
 
@@ -71,6 +77,7 @@ extension Publishers.MyWithLatestFrom {
         }
 
         private func trackLatestFromSecondStream() {
+            var isTrackingMainUpstream = false
             let subcriber = AnySubscriber<Other.Output, Other.Failure>(
                 receiveSubscription: { [weak self] (subscription) in
                     self?.otherSubscription = subscription
@@ -78,7 +85,12 @@ extension Publishers.MyWithLatestFrom {
                 },
                 receiveValue: { [weak self] (value) -> Subscribers.Demand in
                     self?.latestValueFromOther = value
-                    self?.trackMainUpstream()
+                    
+                    if !isTrackingMainUpstream {
+                        isTrackingMainUpstream = true
+                        self?.trackMainUpstream()
+                    }
+                    
                     return .unlimited
                 },
                 receiveCompletion: { (completion) in
@@ -96,7 +108,8 @@ extension Publishers.MyWithLatestFrom {
                                                                     else { return nil }
                                                                 return self.transform(value, other) },
                                                             transformFailure: { $0 })
-
+            request(initialDemandOfDownstream)
+            initialDemandOfDownstream = .none
         }
     }
 }
