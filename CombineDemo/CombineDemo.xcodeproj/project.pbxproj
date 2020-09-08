@@ -27,6 +27,7 @@
 		6A7597E324FF1119004D9741 /* MyMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E224FF1119004D9741 /* MyMap.swift */; };
 		6A7597E524FF12C0004D9741 /* MyWithLatestFrom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E424FF12C0004D9741 /* MyWithLatestFrom.swift */; };
 		6A7597E7250065D7004D9741 /* BackPressureSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */; };
+		6A7597E92507028A004D9741 /* CombinePublishersDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */; };
 		6AACEE8A24FE5A0600783D0F /* TestCustomOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		6A7597E224FF1119004D9741 /* MyMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyMap.swift; sourceTree = "<group>"; };
 		6A7597E424FF12C0004D9741 /* MyWithLatestFrom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyWithLatestFrom.swift; sourceTree = "<group>"; };
 		6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackPressureSubscriber.swift; sourceTree = "<group>"; };
+		6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePublishersDemo.swift; sourceTree = "<group>"; };
 		6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomOperatorTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -144,6 +146,7 @@
 				6A7597E224FF1119004D9741 /* MyMap.swift */,
 				6A7597E424FF12C0004D9741 /* MyWithLatestFrom.swift */,
 				6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */,
+				6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */,
 			);
 			path = CombineDemo;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				6A7597E7250065D7004D9741 /* BackPressureSubscriber.swift in Sources */,
 				6A24302C24A35D4F0080A973 /* NotificationPublisher.swift in Sources */,
 				6A242FF324A3080D0080A973 /* ViewController.swift in Sources */,
+				6A7597E92507028A004D9741 /* CombinePublishersDemo.swift in Sources */,
 				6A242FEF24A3080D0080A973 /* AppDelegate.swift in Sources */,
 				6A24302424A33BFE0080A973 /* @Published.swift in Sources */,
 				6A24302A24A35A800080A973 /* Subjects.swift in Sources */,

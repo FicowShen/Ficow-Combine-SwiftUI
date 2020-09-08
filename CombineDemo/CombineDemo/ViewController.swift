@@ -27,18 +27,20 @@ class ViewController: UIViewController {
     let timerPublisherDemo = TimerPublisherDemo()
     let kvoPublisherDemo = KVOPublisherDemo()
     let asyncCodeDemo = AsyncCodeDemo()
+    let publishersDemo = CombinePublishersDemo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        simpleDemo.run()
-        connectableDemo.run()
-        customSubscriberWithBackPressureDemo.run()
-        subjectsDemo.run()
-        notificationPublisherDemo.run()
-        timerPublisherDemo.run()
-        kvoPublisherDemo.run()
-        asyncCodeDemo.run()
+//        simpleDemo.run()
+//        connectableDemo.run()
+//        customSubscriberWithBackPressureDemo.run()
+//        subjectsDemo.run()
+//        notificationPublisherDemo.run()
+//        timerPublisherDemo.run()
+//        kvoPublisherDemo.run()
+//        asyncCodeDemo.run()
+        publishersDemo.run()
     }
     
     @IBAction func presentProfilePage(_ sender: Any) {
