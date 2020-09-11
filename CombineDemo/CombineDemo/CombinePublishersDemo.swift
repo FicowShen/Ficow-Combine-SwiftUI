@@ -11,8 +11,9 @@ final class CombinePublishersDemo {
 //        future()
 //        future2()
 //        deferred()
-        empty()
+//        empty()
 //        sequence()
+//        fail()
     }
 
     private func just() {
@@ -130,5 +131,30 @@ final class CombinePublishersDemo {
                 print(#function, value)
             })
             .store(in: &self.cancellables)
+        
+        ["key1": "value1",
+         "key2": "value2",
+         "key3": "value3"].publisher
+            .sink(receiveCompletion: { completion in
+                // 输出：sequence() finished
+                print(#function, completion)
+            }, receiveValue: { value in
+                // 输出：sequence() (key: "key2", value: "value2")
+                // 输出：sequence() (key: "key3", value: "value3")
+                // 输出：sequence() (key: "key1", value: "value1")
+                print(#function, value)
+            })
+            .store(in: &self.cancellables)
+    }
+    
+    private func fail() {
+        Fail<Never, NSError>(error: NSError(domain: "", code: 0, userInfo: nil))
+            .sink(receiveCompletion: { completion in
+                // 输出：fail() failure(Error Domain= Code=0 "(null)")
+                print(#function, completion)
+            }, receiveValue: { _ in
+                
+            })
+            .store(in: &cancellables)
     }
 }
