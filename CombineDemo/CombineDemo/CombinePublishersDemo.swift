@@ -14,6 +14,13 @@ final class CombinePublishersDemo {
 //        empty()
 //        sequence()
 //        fail()
+//        record()
+//        withoutShare()
+//        withShare()
+//        withShareAndConnectable()
+//        multicast()
+//        observableObject()
+//        published()
     }
 
     private func just() {
@@ -156,5 +163,213 @@ final class CombinePublishersDemo {
                 
             })
             .store(in: &cancellables)
+    }
+    
+    private func record() {
+        Record<Int, Never> { record in
+            record.receive(1)
+            record.receive(2)
+            record.receive(3)
+            record.receive(completion: .finished)
+        }
+        .sink(receiveCompletion: { completion in
+            // 输出：record() finished
+            print(#function, completion)
+        }, receiveValue: { value in
+            // 输出：record() 1
+            // 输出：record() 2
+            // 输出：record() 3
+            print(#function, value)
+        })
+        .store(in: &cancellables)
+    }
+    
+    private func withoutShare() {
+        let deferred = Deferred<Future<Int, Never>> {
+            print("creating Future")
+            return Future<Int, Never> { promise in
+                print("promise(.success(1))")
+                promise(.success(1))
+            }
+        }
+        
+        deferred
+            .print("1_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion1", completion)
+            }, receiveValue: { value in
+                print("receiveValue1", value)
+            })
+            .store(in: &cancellables)
+        
+        deferred
+            .print("2_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion2", completion)
+            }, receiveValue: { value in
+                print("receiveValue2", value)
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func withShare() {
+        let deferred = Deferred<Future<Int, Never>> {
+            print("creating Future")
+            return Future<Int, Never> { promise in
+                print("promise(.success(1))")
+                promise(.success(1))
+            }
+        }
+        
+        let sharedPublisher = deferred
+            .print("0_")
+            .share()
+        
+        sharedPublisher
+            .print("1_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion1", completion)
+            }, receiveValue: { value in
+                print("receiveValue1", value)
+            })
+            .store(in: &cancellables)
+        
+        sharedPublisher
+            .print("2_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion2", completion)
+            }, receiveValue: { value in
+                print("receiveValue2", value)
+            })
+            .store(in: &cancellables)
+    }
+    
+    private func withShareAndConnectable() {
+        let deferred = Deferred<Future<Int, Never>> {
+            print("creating Future")
+            return Future<Int, Never> { promise in
+                print("promise(.success(1))")
+                promise(.success(1))
+            }
+        }
+        
+        let sharedPublisher = deferred
+            .print("0_")
+            .share()
+            .makeConnectable() // 自行决定发布者何时开始发送订阅元素给订阅者
+        
+        sharedPublisher
+            .print("1_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion1", completion)
+            }, receiveValue: { value in
+                print("receiveValue1", value)
+            })
+            .store(in: &cancellables)
+        
+        sharedPublisher
+            .print("2_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion2", completion)
+            }, receiveValue: { value in
+                print("receiveValue2", value)
+            })
+            .store(in: &cancellables)
+        
+        sharedPublisher
+            .connect() // 让发布者开始发送内容
+            .store(in: &cancellables)
+    }
+    
+    private func multicast() {
+        let multicastSubject = PassthroughSubject<Int, Never>()
+        let deferred = Deferred<Future<Int, Never>> {
+            print("creating Future")
+            return Future<Int, Never> { promise in
+                print("promise(.success(1))")
+                promise(.success(1))
+            }
+        }
+        
+        let sharedPublisher = deferred
+            .print("0_")
+            .multicast(subject: multicastSubject)
+            
+        sharedPublisher
+            .print("1_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion1", completion)
+            }, receiveValue: { value in
+                print("receiveValue1", value)
+            })
+            .store(in: &cancellables)
+        
+        sharedPublisher
+            .print("2_")
+            .sink(receiveCompletion: { completion in
+                print("receiveCompletion2", completion)
+            }, receiveValue: { value in
+                print("receiveValue2", value)
+            })
+            .store(in: &cancellables)
+        
+        sharedPublisher
+            .connect()
+            .store(in: &cancellables)
+    }
+    
+    private func observableObject() {
+        let john = Contact(name: "John Appleseed", age: 24)
+        john.objectWillChange
+            .sink { _ in
+                print("\(john.age) will change")
+            }
+            .store(in: &cancellables)
+        print(john.haveBirthday())
+        // Prints "24 will change"
+        // Prints "25"
+    }
+    
+    private func published() {
+        let weather = Weather(temperature: 20)
+        weather
+            .$temperature // 请注意这里的 $ 符号，通过 $ 操作符来访问发布者
+            .sink() { value in
+                print("Temperature before: \(weather.temperature)") // 属性中的值尚未改变
+                print("Temperature now: \(value)") // 发布者发布的是新值
+            }
+            .store(in: &cancellables)
+        weather.temperature = 25 // 请注意这里没有 $ 符号，访问的是被属性包装器包装起来的值
+        // Prints:
+        // Temperature before: 20.0
+        // Temperature now: 20.0
+        // Temperature before: 20.0
+        // Temperature now: 25.0
+    }
+}
+
+// refer from: https://developer.apple.com/documentation/combine/observableobject
+class Contact: ObservableObject {
+    @Published var name: String
+    @Published var age: Int
+
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+
+
+    func haveBirthday() -> Int {
+        age += 1
+        return age
+    }
+}
+
+// refer from: https://developer.apple.com/documentation/combine/published
+class Weather {
+    @Published var temperature: Double
+    init(temperature: Double) {
+        self.temperature = temperature
     }
 }
