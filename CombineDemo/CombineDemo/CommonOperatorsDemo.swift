@@ -19,7 +19,12 @@ final class CommonOperatorsDemo {
 //        handleEventsDemo()
 //        mapDemo()
 //        flatMapDemo()
-        mergeDemo()
+//        mergeDemo()
+//        combineLatestDemo()
+//        zipDemo()
+//        setFailureTypeDemo()
+//        switchToLatestDemo()
+        switchToLatestDemo2()
     }
     
     private func printDemo() {
@@ -125,12 +130,131 @@ final class CommonOperatorsDemo {
         oddPublisher.send(3)
         evenPublisher.send(4)
     }
+    
+    private func combineLatestDemo() {
+        let oddPublisher = PassthroughSubject<Int, Never>()
+        let evenStringPublisher = PassthroughSubject<String, Never>()
+        
+        oddPublisher
+            .combineLatest(evenStringPublisher)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                print(value)
+            })
+            .store(in: &cancellables)
+        
+        oddPublisher.send(1)
+        evenStringPublisher.send("2")
+        oddPublisher.send(3)
+        evenStringPublisher.send("4")
+    }
+    
+    private func zipDemo() {
+        let oddPublisher = PassthroughSubject<Int, Never>()
+        let evenStringPublisher = PassthroughSubject<String, Never>()
+        
+        oddPublisher
+            .zip(evenStringPublisher)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                print(value)
+            })
+            .store(in: &cancellables)
+        
+        oddPublisher.send(1)
+        evenStringPublisher.send("2")
+        oddPublisher.send(3)
+        evenStringPublisher.send("4")
+        evenStringPublisher.send("6")
+        evenStringPublisher.send("8")
+    }
 
+    private func setFailureTypeDemo() {
+        let publisher = PassthroughSubject<Int, Error>()
+        
+        Just(2)
+            .setFailureType(to: Error.self)
+            .merge(with: publisher)
+            .sink(receiveCompletion: { completion in
+                print(completion)
+            }, receiveValue: { value in
+                print(value)
+            })
+            .store(in: &cancellables)
+        
+        publisher.send(1)
+    }
+    
+    private func switchToLatestDemo() {
+        let subjects = PassthroughSubject<PassthroughSubject<String, Never>, Never>()
+        
+        subjects
+            .switchToLatest()
+            .sink(receiveValue: { print($0) })
+            .store(in: &cancellables)
+        
+        let stringSubject1 = PassthroughSubject<String, Never>()
+        
+        subjects.send(stringSubject1)
+        stringSubject1.send("A")
+        
+        let stringSubject2 = PassthroughSubject<String, Never>()
+        
+        subjects.send(stringSubject2) // 发布者切换为 stringSubject2
+        
+        stringSubject1.send("B") // 下游不会收到
+        stringSubject1.send("C") // 下游不会收到
+        
+        stringSubject2.send("D")
+        stringSubject2.send("E")
+        
+        stringSubject2.send(completion: .finished)
+    }
+    
+    private func switchToLatestDemo2() {
+        let subject = PassthroughSubject<String, Error>()
+        
+        subject.map { value in
+            // 在这里发起网络请求，或者其他可能失败的任务
+            return Future<Int, Error> { promise in
+                if let intValue = Int(value) {
+                    // 根据传入的值来延迟执行
+                    DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(intValue)) {
+                        print(#function, intValue)
+                        promise(.success(intValue))
+                    }
+                } else {
+                    // 失败就立刻完成
+                    promise(.failure(Errors.notInteger))
+                }
+            }
+            .replaceError(with: 0) // 提供默认值，防止下游的订阅因为失败而被终止
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        }
+        .switchToLatest()
+        .sink(receiveCompletion: { completion in
+            print(completion)
+        }, receiveValue: { value in
+            print(value)
+        })
+        .store(in: &cancellables)
+        
+        subject.send("3") // 下游不会收到 3
+        subject.send("") // 立即失败，下游会收到0
+        subject.send("1") // 延时 1 秒后，下游收到 1
+    }
 }
 
 fileprivate extension CommonOperatorsDemo {
     
     struct Model: Decodable {
         let id: Int
+    }
+    
+    enum Errors: Error {
+        case notInteger
     }
 }
