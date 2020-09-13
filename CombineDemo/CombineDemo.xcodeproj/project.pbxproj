@@ -29,6 +29,7 @@
 		6A7597E7250065D7004D9741 /* BackPressureSubscriber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */; };
 		6A7597E92507028A004D9741 /* CombinePublishersDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */; };
 		6AACEE8A24FE5A0600783D0F /* TestCustomOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */; };
+		6ADF5A44250E0AA20056D1B9 /* CommonOperatorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF5A43250E0AA20056D1B9 /* CommonOperatorsDemo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackPressureSubscriber.swift; sourceTree = "<group>"; };
 		6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombinePublishersDemo.swift; sourceTree = "<group>"; };
 		6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomOperatorTests.swift; sourceTree = "<group>"; };
+		6ADF5A43250E0AA20056D1B9 /* CommonOperatorsDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonOperatorsDemo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 				6A7597E424FF12C0004D9741 /* MyWithLatestFrom.swift */,
 				6A7597E6250065D7004D9741 /* BackPressureSubscriber.swift */,
 				6A7597E82507028A004D9741 /* CombinePublishersDemo.swift */,
+				6ADF5A43250E0AA20056D1B9 /* CommonOperatorsDemo.swift */,
 			);
 			path = CombineDemo;
 			sourceTree = "<group>";
@@ -312,6 +315,7 @@
 				6A24302A24A35A800080A973 /* Subjects.swift in Sources */,
 				6A242FF124A3080D0080A973 /* SceneDelegate.swift in Sources */,
 				6A7597E324FF1119004D9741 /* MyMap.swift in Sources */,
+				6ADF5A44250E0AA20056D1B9 /* CommonOperatorsDemo.swift in Sources */,
 				6A24302824A34F040080A973 /* CustomSubscriberWithBackPressure.swift in Sources */,
 				6A7597E524FF12C0004D9741 /* MyWithLatestFrom.swift in Sources */,
 				6A24302E24A35F890080A973 /* TimerPublisher.swift in Sources */,
