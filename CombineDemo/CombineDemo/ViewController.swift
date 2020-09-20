@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     let asyncCodeDemo = AsyncCodeDemo()
     let publishersDemo = CombinePublishersDemo()
     let operatorsDemo = CommonOperatorsDemo()
+    let schedulersDemo = CombineSchedulersDemo()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,8 @@ class ViewController: UIViewController {
 //        kvoPublisherDemo.run()
 //        asyncCodeDemo.run()
 //        publishersDemo.run()
-        operatorsDemo.run()
+//        operatorsDemo.run()
+        schedulersDemo.run()
     }
     
     @IBAction func presentProfilePage(_ sender: Any) {
