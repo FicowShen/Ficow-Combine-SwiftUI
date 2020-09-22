@@ -2,6 +2,25 @@ import Foundation
 import Combine
 
 extension Publisher {
+
+    func bind<Output, Failure: Error>(to subscriber: AnySubscriber<Output, Failure>) -> AnyCancellable where Output == Self.Output, Failure == Self.Failure  {
+        return sink(receiveCompletion: { completion in
+            subscriber.receive(completion: completion)
+        }, receiveValue: { value in
+            _ = subscriber.receive(value)
+        })
+    }
+
+    func mapToVoid() -> Publishers.Map<Self, Void> {
+        return map { _ in () }
+    }
+
+    func withLatestFrom<Other: Publisher, Result>(_ other: Other, transform: @escaping ((Output, Other.Output) -> Result)) -> Publishers.MyWithLatestFrom<Self, Other, Result> {
+        return Publishers.MyWithLatestFrom(upstream: self,
+                                           second: other,
+                                           transform: transform)
+    }
+
     func myWithLatestFrom<Other: Publisher, Result>(_ other: Other, transform: @escaping (Output, Other.Output) -> Result) -> Publishers.MyWithLatestFrom<Self, Other, Result> {
         return Publishers.MyWithLatestFrom(upstream: self,
                                            second: other,
@@ -26,7 +45,7 @@ extension Publishers {
             self.transform = transform
         }
 
-        func receive<S>(subscriber: S) where S : Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
+        func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
             subscriber.receive(subscription: Subscription(upstream: upstream,
                                                           downstream: subscriber,
                                                           second: second,
