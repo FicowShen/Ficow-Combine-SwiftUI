@@ -9,6 +9,7 @@
 import UIKit
 import Combine
 
+/// 每个和 DynamicSayHelloViewModel 进行交互的 View 都需要遵循这个协议
 protocol DynamicSayHelloViewModelBindable {
     var cancellable: Cancellable? { get }
     func bind(to viewModel: DynamicSayHelloViewModel)
