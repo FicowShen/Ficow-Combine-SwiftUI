@@ -39,6 +39,7 @@
 		6A94BBF4251823DF00440132 /* DynamicSayHelloViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94BBF3251823DF00440132 /* DynamicSayHelloViewModel.swift */; };
 		6A94BBF62518250800440132 /* StaticSayHelloViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94BBF52518250800440132 /* StaticSayHelloViewModelTests.swift */; };
 		6A94BBF8251AC4A100440132 /* Subject+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94BBF7251AC4A100440132 /* Subject+Extension.swift */; };
+		6A94BBFA251AC76100440132 /* DynamicSayHelloViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A94BBF9251AC76100440132 /* DynamicSayHelloViewModelTests.swift */; };
 		6AACEE8A24FE5A0600783D0F /* TestCustomOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */; };
 		6ADF5A44250E0AA20056D1B9 /* CommonOperatorsDemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADF5A43250E0AA20056D1B9 /* CommonOperatorsDemo.swift */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		6A94BBF3251823DF00440132 /* DynamicSayHelloViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSayHelloViewModel.swift; sourceTree = "<group>"; };
 		6A94BBF52518250800440132 /* StaticSayHelloViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticSayHelloViewModelTests.swift; sourceTree = "<group>"; };
 		6A94BBF7251AC4A100440132 /* Subject+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Subject+Extension.swift"; sourceTree = "<group>"; };
+		6A94BBF9251AC76100440132 /* DynamicSayHelloViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicSayHelloViewModelTests.swift; sourceTree = "<group>"; };
 		6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCustomOperatorTests.swift; sourceTree = "<group>"; };
 		6ADF5A43250E0AA20056D1B9 /* CommonOperatorsDemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonOperatorsDemo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -185,6 +187,7 @@
 				6A24300724A3080F0080A973 /* Info.plist */,
 				6AACEE8924FE5A0600783D0F /* TestCustomOperatorTests.swift */,
 				6A94BBF52518250800440132 /* StaticSayHelloViewModelTests.swift */,
+				6A94BBF9251AC76100440132 /* DynamicSayHelloViewModelTests.swift */,
 			);
 			path = CombineDemoTests;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				6A94BBF62518250800440132 /* StaticSayHelloViewModelTests.swift in Sources */,
 				6AACEE8A24FE5A0600783D0F /* TestCustomOperatorTests.swift in Sources */,
 				6A24300624A3080F0080A973 /* CombineDemoTests.swift in Sources */,
+				6A94BBFA251AC76100440132 /* DynamicSayHelloViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

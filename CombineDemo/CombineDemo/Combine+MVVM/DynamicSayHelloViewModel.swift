@@ -24,6 +24,7 @@ final class DynamicSayHelloViewModel: DynamicViewModel {
             .map { name -> String? in
                 return "Hello \(name)!"
             }
+            .prepend("")
             .eraseToAnyPublisher()
 
         self.output = Output(greeting: greeting)
