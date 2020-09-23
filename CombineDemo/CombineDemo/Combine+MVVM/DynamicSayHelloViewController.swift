@@ -19,7 +19,6 @@ final class TextFieldCell: UITableViewCell, DynamicSayHelloViewModelBindable {
 
     @IBOutlet weak var nameTextField: UITextField!
     var cancellable: Cancellable?
-    var cancellable2: Cancellable?
 
     override func prepareForReuse() {
         super.prepareForReuse()
