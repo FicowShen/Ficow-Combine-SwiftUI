@@ -46,6 +46,7 @@ extension Publishers {
         }
 
         func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
+            // 通过订阅来连接上下游
             subscriber.receive(subscription: Subscription(upstream: upstream,
                                                           downstream: subscriber,
                                                           second: second,
@@ -79,24 +80,30 @@ extension Publishers.MyWithLatestFrom {
             self.downstream = downstream
             self.transform = transform
 
+            // 创建订阅时就开始订阅第二个流
             trackLatestFromSecondStream()
         }
 
         func request(_ demand: Subscribers.Demand) {
             guard latestValueFromOther != nil else {
+                // 暂存下游的需求，在订阅后再向上游请求
                 initialDemandOfDownstream += demand
                 return
             }
+            // 当第二个流有值的时候，直接将下游订阅者的需求发给第一个流的上游发布者
             backPressureSubscriber?.requestDemand(demand)
         }
 
         func cancel() {
+            // 取消两个流的订阅
             otherSubscription?.cancel()
             backPressureSubscriber = nil
         }
 
         private func trackLatestFromSecondStream() {
+
             var isTrackingMainUpstream = false
+
             let subcriber = AnySubscriber<Other.Output, Other.Failure>(
                 receiveSubscription: { [weak self] (subscription) in
                     self?.otherSubscription = subscription
@@ -107,6 +114,7 @@ extension Publishers.MyWithLatestFrom {
                     
                     if !isTrackingMainUpstream {
                         isTrackingMainUpstream = true
+                        // 在第二个流有值时才开始订阅第一个流
                         self?.trackMainUpstream()
                     }
                     
@@ -122,11 +130,14 @@ extension Publishers.MyWithLatestFrom {
             backPressureSubscriber = BackPressureSubscriber(upstream: upstream,
                                                             downstream: downstream,
                                                             transformOutput: { [weak self] value in
+                                                                // 仅在辅助流中有值时才执行 transform
                                                                 guard let self = self,
                                                                     let other = self.latestValueFromOther
                                                                     else { return nil }
+                                                                // 将主流和辅助流中的值传递给 transfrom
                                                                 return self.transform(value, other) },
                                                             transformFailure: { $0 })
+            // 向上游请求之前已暂存的下游订阅者的需求
             request(initialDemandOfDownstream)
             initialDemandOfDownstream = .none
         }

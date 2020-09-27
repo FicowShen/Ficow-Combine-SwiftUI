@@ -4,7 +4,7 @@ import Combine
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final class BackPressureSubscriber<Upstream: Publisher, Downstream: Subscriber>: Subscriber {
 
-    typealias TransformFailure = (Upstream.Failure) -> Downstream.Failure?
+    typealias TransformFailure = (Upstream.Failure) -> Downstream.Failure
     typealias TransformOutput = (Upstream.Output) -> Downstream.Input?
 
     private let upstream: Upstream
@@ -23,10 +23,12 @@ final class BackPressureSubscriber<Upstream: Publisher, Downstream: Subscriber>:
         self.downstream = downstream
         self.transformOutput = transformOutput
         self.transformFailure = transformFailure
+        // 创建时就订阅上游
         upstream.subscribe(self)
     }
 
     deinit {
+        // 销毁时，自动取消订阅
         cancelSubscription()
     }
 
@@ -56,10 +58,7 @@ final class BackPressureSubscriber<Upstream: Publisher, Downstream: Subscriber>:
         case .finished:
             downstream.receive(completion: .finished)
         case .failure(let error):
-            guard let transformedFailure = transformFailure(error) else {
-                fatalError("BackPressureSubscriber[\(self)] cannot convert error[\(error)] for downstream[\(downstream)].")
-            }
-            downstream.receive(completion: .failure(transformedFailure))
+            downstream.receive(completion: .failure(transformFailure(error)))
         }
         cancelSubscription()
     }
